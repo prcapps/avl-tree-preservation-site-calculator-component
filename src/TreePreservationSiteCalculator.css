@@ -5,3 +5,9 @@ body{
 table, th, tr, td{
 	border: 1px solid black;
 }
+
+/*$body-color: red;
+
+body {
+  color: $body-color;
+}*/

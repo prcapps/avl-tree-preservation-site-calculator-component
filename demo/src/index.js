@@ -5,7 +5,7 @@ import Example from '../../src'
 
 class Demo extends Component {
   render() {
-    return <div>
+    return <div class="container">
       <h1>avl-tree-preservation-site-calculator-component Demo</h1>
       <Example/>
     </div>

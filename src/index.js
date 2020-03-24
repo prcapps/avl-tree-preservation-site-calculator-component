@@ -12,7 +12,7 @@ class TreePreservationInputForm extends React.Component {
     this.state = {
         address: '',
         parcel_size: 31798,
-        existing_tree_canopy: '',
+        existing_tree_canopy: 50,
         resource_management_district: false,
         land_use: false,
         payment_in_lieu_area: 4770,
@@ -125,11 +125,17 @@ class TreePreservationInputForm extends React.Component {
 
   render() {
     const tree_canopy_classification =this.calculateTreeCanopyClassification();
-    
+    const resource_management_district = this.state.resource_management_district;
 
     return (
 
       <form onSubmit={this.handleSubmit} class="container mb-5">
+      	<div class="jumbotron jumbotron-fluid">
+		  <div class="container">
+		    <h1 class="display-4">Fluid jumbotron</h1>
+		    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+		  </div>
+		</div>
       	<hr class="my-5"></hr>
       	<div class="form-row">
 	        <div class="form-group col-lg-4 col-md-6">
@@ -203,12 +209,17 @@ class TreePreservationInputForm extends React.Component {
 	        </div>	        	        
 	      </div>
         <input type="submit" value="Submit" class="btn btn-lg btn-primary"/>
+        { tree_canopy_classification && 
+        	<div>
+		        <hr class="my-5"></hr>
+		        <h2>Results</h2>
+				<div class="alert alert-primary" role="alert">
+		      		{ tree_canopy_classification }
+		        </div>
+	        </div>
+	    }
         <hr class="my-5"></hr>
-        <div class="">
-        INPUT: {this.state.resource_management_district} : {this.state.land_use} <br />
-        RESULT: { tree_canopy_classification }
-        </div>
-        <hr class="my-5"></hr>
+        { tree_canopy_classification == "Class A" && 
         <div>
           <legend>
              Table 7-19.2 | Class Based Canopy Requirement, Classes A & B*     
@@ -231,97 +242,104 @@ class TreePreservationInputForm extends React.Component {
 	                </th>
 	              </tr>
 	            </thead>
+               { tree_canopy_classification == "Class A" && 
 	            <tbody>
-	              <tr>
-	                <td rowSpan="7">
-	                  Class A
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.05).toFixed(0) } SF 
-	                  (5%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.0).toFixed(0) } SF 
-	                  (0%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.05 + this.state.parcel_size * 0.0).toFixed(0) } SF 
-	                  (5%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.04).toFixed(0) } SF 
-	                  (4%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.02).toFixed(0) } SF 
-	                  (2%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.04 + this.state.parcel_size * 0.02).toFixed(0) } SF 
-	                  (6%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.03).toFixed(0) } SF 
-	                  (3%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.04).toFixed(0) } SF 
-	                  (4%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.07).toFixed(0) } SF 
-	                  (7%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.02).toFixed(0) } SF 
-	                  (2%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.06).toFixed(0) } SF 
-	                  (6%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.08).toFixed(0) } SF 
-	                  (8%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.01).toFixed(0) } SF 
-	                  (1%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.08).toFixed(0) } SF 
-	                  (8%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.09).toFixed(0) } SF 
-	                  (9%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.00).toFixed(0) } SF 
-	                  (0%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.10).toFixed(0) } SF 
-	                  (10%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.10).toFixed(0) } SF 
-	                  (10%)
-	                </td>
-	              </tr>
-	              <tr>
+		              <tr>
+		                <td rowSpan="7">
+		                  Class A
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.05).toFixed(0) } SF 
+		                  (5%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.0).toFixed(0) } SF 
+		                  (0%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.05 + this.state.parcel_size * 0.0).toFixed(0) } SF 
+		                  (5%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.04).toFixed(0) } SF 
+		                  (4%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.02).toFixed(0) } SF 
+		                  (2%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.04 + this.state.parcel_size * 0.02).toFixed(0) } SF 
+		                  (6%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.03).toFixed(0) } SF 
+		                  (3%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.04).toFixed(0) } SF 
+		                  (4%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.07).toFixed(0) } SF 
+		                  (7%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.02).toFixed(0) } SF 
+		                  (2%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.06).toFixed(0) } SF 
+		                  (6%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.08).toFixed(0) } SF 
+		                  (8%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.01).toFixed(0) } SF 
+		                  (1%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.08).toFixed(0) } SF 
+		                  (8%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.09).toFixed(0) } SF 
+		                  (9%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.00).toFixed(0) } SF 
+		                  (0%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.10).toFixed(0) } SF 
+		                  (10%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.10).toFixed(0) } SF 
+		                  (10%)
+		                </td>
+		              </tr>
+	  	            </tbody>
+
+		          }
+                 { tree_canopy_classification == "Class B" && 
+
+	  	           <tbody>
+	              	<tr>
 	                <td rowSpan="7">
 	                  Class B
 	                </td>
@@ -411,304 +429,318 @@ class TreePreservationInputForm extends React.Component {
 	                </td>
 	              </tr>
 	            </tbody>
+		        }
 	          </table>
 	        </div>
         </div>
+	    }
         <hr class="my-5"></hr>
-        <div>
-          <legend>
-            Table 7-19.3 | Class Based Canopy Requirement, Class C***
-          </legend>
-          <div class="table-responsive">
-	          <table class="table table-hover table-bordered">
-	            <thead>
-	              <tr>
-	                <th>
-	                  Tree Canopy Requirement Classification
-	                </th>
-	                <th>
-	                  Existing Tree Canopy Preserved
-	                </th>
-	                <th>
-	                  New Tree Canopy Required
-	                </th>
-	                <th>
-	                  Total Tree Canopy Requirement
-	                </th>
-	              </tr>
-	            </thead>
-	            <tbody>
-	              <tr>
-	                <td rowSpan="7">
-	                  Class C - Over 75% Canopy
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
-	                  (15%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.0).toFixed(0) } SF 
-	                  (0%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
-	                  (15%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.12).toFixed(0) } SF 
-	                  (12%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.06).toFixed(0) } SF 
-	                  (6%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.18).toFixed(0) } SF 
-	                  (18%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.09).toFixed(0) } SF 
-	                  (9%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.12).toFixed(0) } SF 
-	                  (12%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.21).toFixed(0) } SF 
-	                  (21%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.06).toFixed(0) } SF 
-	                  (6%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.18).toFixed(0) } SF 
-	                  (18%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.24).toFixed(0) } SF 
-	                  (24%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.03).toFixed(0) } SF 
-	                  (3%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.24).toFixed(0) } SF 
-	                  (24%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.27).toFixed(0) } SF 
-	                  (27%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.00).toFixed(0) } SF 
-	                  (0%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.30).toFixed(0) } SF 
-	                  (30%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.30).toFixed(0) } SF 
-	                  (30%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td rowSpan="7">
-	                  Class C - 41-75% Canopy
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
-	                  (15%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.0).toFixed(0) } SF 
-	                  (0%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
-	                  (15%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.12).toFixed(0) } SF 
-	                  (12%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.05).toFixed(0) } SF 
-	                  (5%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.17).toFixed(0) } SF 
-	                  (17%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.09).toFixed(0) } SF 
-	                  (9%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.10).toFixed(0) } SF 
-	                  (10%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.19).toFixed(0) } SF 
-	                  (19%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.06).toFixed(0) } SF 
-	                  (6%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
-	                  (15%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.21).toFixed(0) } SF 
-	                  (21%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.03).toFixed(0) } SF 
-	                  (3%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.20).toFixed(0) } SF 
-	                  (20%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.23).toFixed(0) } SF 
-	                  (23%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.00).toFixed(0) } SF 
-	                  (0%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.25).toFixed(0) } SF 
-	                  (25%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.25).toFixed(0) } SF 
-	                  (25%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td rowSpan="7">
-	                  Class C - Under 40% Canopy
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
-	                  (15%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.0).toFixed(0) } SF 
-	                  (0%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
-	                  (15%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.12).toFixed(0) } SF 
-	                  (12%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.04).toFixed(0) } SF 
-	                  (4%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.16).toFixed(0) } SF 
-	                  (16%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.09).toFixed(0) } SF 
-	                  (9%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.8).toFixed(0) } SF 
-	                  (8%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.17).toFixed(0) } SF 
-	                  (17%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.06).toFixed(0) } SF 
-	                  (6%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.12).toFixed(0) } SF 
-	                  (12%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.18).toFixed(0) } SF 
-	                  (18%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.03).toFixed(0) } SF 
-	                  (3%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.16).toFixed(0) } SF 
-	                  (16%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.19).toFixed(0) } SF 
-	                  (19%)
-	                </td>
-	              </tr>
-	              <tr>
-	                <td>
-	                  { (this.state.parcel_size * 0.00).toFixed(0) } SF 
-	                  (0%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.20).toFixed(0) } SF 
-	                  (20%)
-	                </td>
-	                <td>
-	                  { (this.state.parcel_size * 0.20).toFixed(0) } SF 
-	                  (20%)
-	                </td>
-	              </tr>
-	            </tbody>
-	          </table>
+        { (tree_canopy_classification == "Class C" || tree_canopy_classification == "Class C - Over 75% Canopy" || tree_canopy_classification == "Class C - 41-75% Canopy" || tree_canopy_classification == "Class C - Under 40% Canopy") && 
+	        <div>
+	          <legend>
+	            Table 7-19.3 | Class Based Canopy Requirement, Class C***
+	          </legend>
+	          <div class="table-responsive">
+		          <table class="table table-hover table-bordered">
+		            <thead>
+		              <tr>
+		                <th>
+		                  Tree Canopy Requirement Classification
+		                </th>
+		                <th>
+		                  Existing Tree Canopy Preserved
+		                </th>
+		                <th>
+		                  New Tree Canopy Required
+		                </th>
+		                <th>
+		                  Total Tree Canopy Requirement
+		                </th>
+		              </tr>
+		            </thead>
+	                { tree_canopy_classification == "Class C - Over 75% Canopy" && 
+		            <tbody>
+		              <tr>
+		                <td rowSpan="7">
+		                  Class C - Over 75% Canopy
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
+		                  (15%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.0).toFixed(0) } SF 
+		                  (0%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
+		                  (15%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.12).toFixed(0) } SF 
+		                  (12%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.06).toFixed(0) } SF 
+		                  (6%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.18).toFixed(0) } SF 
+		                  (18%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.09).toFixed(0) } SF 
+		                  (9%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.12).toFixed(0) } SF 
+		                  (12%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.21).toFixed(0) } SF 
+		                  (21%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.06).toFixed(0) } SF 
+		                  (6%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.18).toFixed(0) } SF 
+		                  (18%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.24).toFixed(0) } SF 
+		                  (24%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.03).toFixed(0) } SF 
+		                  (3%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.24).toFixed(0) } SF 
+		                  (24%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.27).toFixed(0) } SF 
+		                  (27%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.00).toFixed(0) } SF 
+		                  (0%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.30).toFixed(0) } SF 
+		                  (30%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.30).toFixed(0) } SF 
+		                  (30%)
+		                </td>
+		              </tr>
+		             </tbody>
+		          }
+  	                { tree_canopy_classification == "Class C - 41-75% Canopy" && 
+		             <tbody>
+		              <tr>
+		                <td rowSpan="7">
+		                  Class C - 41-75% Canopy
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
+		                  (15%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.0).toFixed(0) } SF 
+		                  (0%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
+		                  (15%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.12).toFixed(0) } SF 
+		                  (12%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.05).toFixed(0) } SF 
+		                  (5%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.17).toFixed(0) } SF 
+		                  (17%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.09).toFixed(0) } SF 
+		                  (9%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.10).toFixed(0) } SF 
+		                  (10%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.19).toFixed(0) } SF 
+		                  (19%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.06).toFixed(0) } SF 
+		                  (6%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
+		                  (15%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.21).toFixed(0) } SF 
+		                  (21%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.03).toFixed(0) } SF 
+		                  (3%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.20).toFixed(0) } SF 
+		                  (20%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.23).toFixed(0) } SF 
+		                  (23%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.00).toFixed(0) } SF 
+		                  (0%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.25).toFixed(0) } SF 
+		                  (25%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.25).toFixed(0) } SF 
+		                  (25%)
+		                </td>
+		              </tr>
+		            </tbody>
+		          	}
+  	                { tree_canopy_classification == "Class C - Under 40% Canopy" && 
+		             <tbody>
+		              <tr>
+		                <td rowSpan="7">
+		                  Class C - Under 40% Canopy
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
+		                  (15%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.0).toFixed(0) } SF 
+		                  (0%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.15).toFixed(0) } SF 
+		                  (15%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.12).toFixed(0) } SF 
+		                  (12%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.04).toFixed(0) } SF 
+		                  (4%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.16).toFixed(0) } SF 
+		                  (16%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.09).toFixed(0) } SF 
+		                  (9%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.8).toFixed(0) } SF 
+		                  (8%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.17).toFixed(0) } SF 
+		                  (17%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.06).toFixed(0) } SF 
+		                  (6%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.12).toFixed(0) } SF 
+		                  (12%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.18).toFixed(0) } SF 
+		                  (18%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.03).toFixed(0) } SF 
+		                  (3%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.16).toFixed(0) } SF 
+		                  (16%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.19).toFixed(0) } SF 
+		                  (19%)
+		                </td>
+		              </tr>
+		              <tr>
+		                <td>
+		                  { (this.state.parcel_size * 0.00).toFixed(0) } SF 
+		                  (0%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.20).toFixed(0) } SF 
+		                  (20%)
+		                </td>
+		                <td>
+		                  { (this.state.parcel_size * 0.20).toFixed(0) } SF 
+		                  (20%)
+		                </td>
+		              </tr>
+		            </tbody>
+		          	}
+		          </table>
+		        </div>
 	        </div>
-        </div>
+	    }
         <hr class="my-5"></hr>
         <div class="row">
         <div class="col-lg-6">
@@ -894,33 +926,33 @@ export default class extends Component {
   render() {
     return <div className="TreePreservationSiteCalculator">
     <link rel='dns-prefetch' href='//cdn.datatables.net' />
-<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
-<link rel='dns-prefetch' href='//www.ashevillenc.gov' />
-<link rel='dns-prefetch' href='//www.google.com' />
-<link rel='dns-prefetch' href='//stackpath.bootstrapcdn.com' />
-<link rel='dns-prefetch' href='//cdn.jsdelivr.net' />
-<link rel='dns-prefetch' href='//translate.google.com' />
-<link rel='dns-prefetch' href='//platform.twitter.com' />
-<link rel="alternate" type="application/rss+xml" title="The City of Asheville &raquo; Feed" href="https://www.ashevillenc.gov/feed/" />
-<link rel="alternate" type="application/rss+xml" title="The City of Asheville &raquo; Comments Feed" href="https://www.ashevillenc.gov/comments/feed/" />
-<link rel="alternate" type="text/calendar" title="The City of Asheville &raquo; iCal Feed" href="https://www.ashevillenc.gov/events/?ical=1" />
-<link rel='stylesheet' id='tribe-common-skeleton-style-css'  href='https://www.ashevillenc.gov/wp-content/plugins/the-events-calendar/common/src/resources/css/common-skeleton.min.css?ver=4.10.2' type='text/css' media='all' />
-<link rel='stylesheet' id='tribe-tooltip-css'  href='https://www.ashevillenc.gov/wp-content/plugins/the-events-calendar/common/src/resources/css/tooltip.min.css?ver=4.10.2' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-css'  href='https://www.ashevillenc.gov/wp-includes/css/dist/block-library/style.min.css?ver=5.3.2' type='text/css' media='all' />
-<link rel='stylesheet' id='jquery-datatables-css'  href='https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
-<link rel='stylesheet' id='datatables-buttons-css'  href='https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
-<link rel='stylesheet' id='datatables-select-css'  href='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
-<link rel='stylesheet' id='datatables-fixedheader-css'  href='https://cdn.datatables.net/fixedheader/3.1.3/css/fixedHeader.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
-<link rel='stylesheet' id='datatables-fixedcolumns-css'  href='https://cdn.datatables.net/fixedcolumns/3.2.3/css/fixedColumns.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
-<link rel='stylesheet' id='datatables-responsive-css'  href='https://cdn.datatables.net/responsive/2.2.0/css/responsive.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
-<link rel='stylesheet' id='wpfront-notification-bar-css'  href='https://www.ashevillenc.gov/wp-content/plugins/wpfront-notification-bar/css/wpfront-notification-bar.css?ver=1.7.1' type='text/css' media='all' />
-<link rel='stylesheet' id='bootstrap-style-css'  href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' type='text/css' media='all' />
-<link rel='stylesheet' id='lindua-style-css'  href='https://www.ashevillenc.gov/wp-content/themes/avl/css/lindua.css' type='text/css' media='all' />
-<link rel='stylesheet' id='icomoon-style-css'  href='https://www.ashevillenc.gov/wp-content/themes/avl/css/icomoon.css' type='text/css' media='all' />
-<link rel='stylesheet' id='algolia-autocomplete-css'  href='https://www.ashevillenc.gov/wp-content/plugins/search-by-algolia-instant-relevant-results/includes/../css/algolia-autocomplete.css?ver=2.11.3' type='text/css' media='screen' />
-<link rel='stylesheet' id='avl-style-css'  href='https://www.ashevillenc.gov/wp-content/themes/avl/style.css?ver=1584663251' type='text/css' media='all' />
-<link rel='stylesheet' id='header-style-css'  href='https://www.ashevillenc.gov/wp-admin/admin-ajax.php?action=get_header_style' type='text/css' media='all' />
-<link rel='stylesheet' id='fancybox-style-css'  href='https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css' type='text/css' media='all' />
+	<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+	<link rel='dns-prefetch' href='//www.ashevillenc.gov' />
+	<link rel='dns-prefetch' href='//www.google.com' />
+	<link rel='dns-prefetch' href='//stackpath.bootstrapcdn.com' />
+	<link rel='dns-prefetch' href='//cdn.jsdelivr.net' />
+	<link rel='dns-prefetch' href='//translate.google.com' />
+	<link rel='dns-prefetch' href='//platform.twitter.com' />
+	<link rel="alternate" type="application/rss+xml" title="The City of Asheville &raquo; Feed" href="https://www.ashevillenc.gov/feed/" />
+	<link rel="alternate" type="application/rss+xml" title="The City of Asheville &raquo; Comments Feed" href="https://www.ashevillenc.gov/comments/feed/" />
+	<link rel="alternate" type="text/calendar" title="The City of Asheville &raquo; iCal Feed" href="https://www.ashevillenc.gov/events/?ical=1" />
+	<link rel='stylesheet' id='tribe-common-skeleton-style-css'  href='https://www.ashevillenc.gov/wp-content/plugins/the-events-calendar/common/src/resources/css/common-skeleton.min.css?ver=4.10.2' type='text/css' media='all' />
+	<link rel='stylesheet' id='tribe-tooltip-css'  href='https://www.ashevillenc.gov/wp-content/plugins/the-events-calendar/common/src/resources/css/tooltip.min.css?ver=4.10.2' type='text/css' media='all' />
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://www.ashevillenc.gov/wp-includes/css/dist/block-library/style.min.css?ver=5.3.2' type='text/css' media='all' />
+	<link rel='stylesheet' id='jquery-datatables-css'  href='https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
+	<link rel='stylesheet' id='datatables-buttons-css'  href='https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
+	<link rel='stylesheet' id='datatables-select-css'  href='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
+	<link rel='stylesheet' id='datatables-fixedheader-css'  href='https://cdn.datatables.net/fixedheader/3.1.3/css/fixedHeader.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
+	<link rel='stylesheet' id='datatables-fixedcolumns-css'  href='https://cdn.datatables.net/fixedcolumns/3.2.3/css/fixedColumns.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
+	<link rel='stylesheet' id='datatables-responsive-css'  href='https://cdn.datatables.net/responsive/2.2.0/css/responsive.dataTables.min.css?ver=5.3.2' type='text/css' media='all' />
+	<link rel='stylesheet' id='wpfront-notification-bar-css'  href='https://www.ashevillenc.gov/wp-content/plugins/wpfront-notification-bar/css/wpfront-notification-bar.css?ver=1.7.1' type='text/css' media='all' />
+	<link rel='stylesheet' id='bootstrap-style-css'  href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='lindua-style-css'  href='https://www.ashevillenc.gov/wp-content/themes/avl/css/lindua.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='icomoon-style-css'  href='https://www.ashevillenc.gov/wp-content/themes/avl/css/icomoon.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='algolia-autocomplete-css'  href='https://www.ashevillenc.gov/wp-content/plugins/search-by-algolia-instant-relevant-results/includes/../css/algolia-autocomplete.css?ver=2.11.3' type='text/css' media='screen' />
+	<link rel='stylesheet' id='avl-style-css'  href='https://www.ashevillenc.gov/wp-content/themes/avl/style.css?ver=1584663251' type='text/css' media='all' />
+	<link rel='stylesheet' id='header-style-css'  href='https://www.ashevillenc.gov/wp-admin/admin-ajax.php?action=get_header_style' type='text/css' media='all' />
+	<link rel='stylesheet' id='fancybox-style-css'  href='https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css' type='text/css' media='all' />
 
 
       <header className="App-header">

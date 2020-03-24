@@ -1,6 +1,6 @@
 {
   "name": "avl-tree-preservation-site-calculator-component",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "avl-tree-preservation-site-calculator-component React component",
   "main": "lib/index.js",
   "module": "es/index.js",

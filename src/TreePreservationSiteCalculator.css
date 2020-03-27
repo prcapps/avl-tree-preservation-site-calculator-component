@@ -15,3 +15,11 @@ table, th, tr, td{
 body {
   color: $body-color;
 }*/
+
+.container > h1{
+	display: none;
+}
+
+.jumbotron .container > h1{
+	display: block;
+}

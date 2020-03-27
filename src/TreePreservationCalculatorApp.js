@@ -115,7 +115,7 @@ export default class TreePreservationCalculatorApp extends React.Component {
         <div className="jumbotron jumbotron-fluid">
           <div className="container">
             <h1 className="display-4">City of Asheville: Tree Preservation Calculator</h1>
-            <p className="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+            <p className="lead">Please fill out the form below to generate a Tree Canopy Classification and Fee in Lieu payment calculations.</p>
           </div>
         </div>
         <hr className="my-5" />
@@ -201,36 +201,42 @@ export default class TreePreservationCalculatorApp extends React.Component {
               </div>
             </div>
           )}
-        <TreePreservationClassificationTables tree_canopy_classification={tree_canopy_classification} parcel_size={this.state.parcel_size} />
-        <hr className="my-5" />
-        <div className="row">
-          <div className="col-lg-6">
-            <legend>
-              Fee in Lieu - Assumptions
-            </legend>
-            <div className="table-responsive">
-              <TreePreservationFeeInLieuAssumptions resource_management_district={this.state.resource_management_district} assumption={this.fee_in_lieu_assumption} />
-            </div>
-          </div>
-          <div className="col-md-12 d-md-block d-md-block d-lg-none">
+        { tree_canopy_classification &&
+          <TreePreservationClassificationTables tree_canopy_classification={tree_canopy_classification} parcel_size={this.state.parcel_size} />
+        }
+        { this.state.resource_management_district != 'Select' &&
+          <div>
             <hr className="my-5" />
-          </div>
-          <div className="col-lg-6">
-            <legend>
-              Payment Calculations
-            </legend>
+            <div className="row">
+              <div className="col-lg-6">
+                <legend>
+                        Fee in Lieu - Assumptions
+                </legend>
+                <div className="table-responsive">
+                  <TreePreservationFeeInLieuAssumptions resource_management_district={this.state.resource_management_district} assumption={this.fee_in_lieu_assumption} />
+                </div>
+              </div>
+              <div className="col-md-12 d-md-block d-md-block d-lg-none">
+                <hr className="my-5" />
+              </div>
+              <div className="col-lg-6">
+                <legend>
+                        Payment Calculations
+                </legend>
 
-            <div className="table-responsive">
-              <TreePreservationPaymentCalculations resource_management_district={this.state.resource_management_district} payment_in_lieu_area={this.state.payment_in_lieu_area} assumption={this.fee_in_lieu_assumption}/>
-            </div>
-            <div>
-              Area to apply Fee in Lieu:
-              <strong>
-                { ' ' + this.state.payment_in_lieu_area + ' SF' }
-              </strong>
+                <div className="table-responsive">
+                  <TreePreservationPaymentCalculations resource_management_district={this.state.resource_management_district} payment_in_lieu_area={this.state.payment_in_lieu_area} assumption={this.fee_in_lieu_assumption}/>
+                </div>
+                <div>
+                        Area to apply Fee in Lieu:
+                  <strong>
+                    { ' ' + this.state.payment_in_lieu_area + ' SF' }
+                  </strong>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        }
       </form>
     )
   }

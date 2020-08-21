@@ -112,13 +112,6 @@ export default class TreePreservationCalculatorApp extends React.Component {
     return (
 
       <form onSubmit={this.handleSubmit} className="container mb-5">
-        <div className="jumbotron jumbotron-fluid">
-          <div className="container">
-            <h1 className="display-4">City of Asheville: Tree Preservation Calculator</h1>
-            <p className="lead">Please fill out the form below to generate a Tree Canopy Classification and Fee in Lieu payment calculations.</p>
-          </div>
-        </div>
-        <hr className="my-5" />
         <div className="form-row">
           <div className="form-group col-lg-4 col-md-6">
             <label htmlFor="address">
@@ -134,18 +127,22 @@ export default class TreePreservationCalculatorApp extends React.Component {
           </div>
           <div className="form-group col-lg-4 col-md-6">
             <label htmlFor="existing_tree_canopy">
-              Existing Tree Canopy:
+              <a href='https://avl.maps.arcgis.com/apps/webappviewer/index.html?id=e8bb75d48f78449dbf44de5f2cd0bb73'>
+                Existing Tree Canopy:
+              </a>
             </label>
             <div className="input-group">
               <input type="number" name="existing_tree_canopy" className="form-control" id="existing_tree_canopy" value={this.state.existing_tree_canopy} onChange={this.handleChange} />
               <div className="input-group-append">
-                <span className="input-group-text">sqft</span>
+                <span className="input-group-text">%</span>
               </div>
             </div>
           </div>
           <div className="form-group col-lg-4 col-md-6">
             <label htmlFor="resource_management_district">
-              Resource Management District:
+              <a href='https://avl.maps.arcgis.com/apps/webappviewer/index.html?id=e8bb75d48f78449dbf44de5f2cd0bb73'>
+                Resource Management District:
+              </a>
             </label>
             <select className="custom-select" name="resource_management_district" id="resource_management_district" value={this.state.resource_management_district} onChange={this.handleChange}>
               <option>Select</option>

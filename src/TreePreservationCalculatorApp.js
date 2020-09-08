@@ -127,7 +127,7 @@ export default class TreePreservationCalculatorApp extends React.Component {
           </div>
           <div className="form-group col-lg-4 col-md-6">
             <label htmlFor="existing_tree_canopy">
-              <a href='https://avl.maps.arcgis.com/apps/webappviewer/index.html?id=e8bb75d48f78449dbf44de5f2cd0bb73'>
+              <a target='_blank' href='https://avl.maps.arcgis.com/apps/webappviewer/index.html?id=e8bb75d48f78449dbf44de5f2cd0bb73'>
                 Existing Tree Canopy:
               </a>
             </label>
@@ -140,7 +140,7 @@ export default class TreePreservationCalculatorApp extends React.Component {
           </div>
           <div className="form-group col-lg-4 col-md-6">
             <label htmlFor="resource_management_district">
-              <a href='https://avl.maps.arcgis.com/apps/webappviewer/index.html?id=e8bb75d48f78449dbf44de5f2cd0bb73'>
+              <a target='_blank' href='https://avl.maps.arcgis.com/apps/webappviewer/index.html?id=e8bb75d48f78449dbf44de5f2cd0bb73'>
                 Resource Management District:
               </a>
             </label>
